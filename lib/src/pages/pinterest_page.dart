@@ -1,14 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_layout/src/widget/pinterest_menu.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
 class Pinterest extends StatelessWidget {
   const Pinterest({Key key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+  final widthScreen=MediaQuery.of(context).size.width;
+
     return Scaffold(
-      body: PinterestGrid(), 
+      // body: PinterestGrid(),
+      // body: PinterestGrid(), 
+      body: Stack(
+        children: <Widget>[
+          PinterestGrid(),
+          Positioned(
+            bottom: 30,
+            child: Container(
+              width: widthScreen,
+              child: Align(
+                child: PinterestMenu(),
+              ),
+            )
+            ),
+        ],
+      ),
+
     );
   }
 }

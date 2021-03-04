@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
         ),
-        child: PinterestMenu(),
+        child: Pinterest(),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PinterestButton{
   final Function onPressed;
@@ -27,10 +28,11 @@ class PinterestMenu extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return ChangeNotifierProvider(
+        create: (_)=>new _MenuModel(),
         child: _PinterestMenuBackground(
-          child:_MenuItems(items),
-        ),
+        child:_MenuItems(items),
+      ),
     );
   }
 }
@@ -79,14 +81,20 @@ class _PinterestMenuButton extends StatelessWidget {
   _PinterestMenuButton(this.index,this.item);
   @override
   Widget build(BuildContext context) {
+    final itemselected=Provider.of<_MenuModel>(context).itemSelected;
+
     return GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: item.onPressed,
+          onTap: (){
+            Provider.of<_MenuModel>(context,listen: false).itemSelected=index;
+            item.onPressed();
+          
+          },
           child: Container(
           child: Icon(
             item.icon,
-            size: 25,
-            color: Colors.blueGrey,
+            size: (itemselected==index)?35:25,
+            color: (itemselected==index)?Colors.black:Colors.blueGrey,
             ),
           
       ),
