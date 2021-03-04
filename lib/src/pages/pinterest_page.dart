@@ -9,36 +9,72 @@ class Pinterest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  final widthScreen=MediaQuery.of(context).size.width;
-
     return Scaffold(
       // body: PinterestGrid(),
       // body: PinterestGrid(), 
       body: Stack(
         children: <Widget>[
           PinterestGrid(),
-          Positioned(
-            bottom: 30,
-            child: Container(
-              width: widthScreen,
-              child: Align(
-                child: PinterestMenu(),
-              ),
-            )
-            ),
+          _PinterestMenuLocation(),
         ],
       ),
 
     );
   }
 }
-class PinterestGrid extends StatelessWidget{
 
+class _PinterestMenuLocation extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+  final widthScreen=MediaQuery.of(context).size.width;
+
+    return Positioned(
+      bottom: 30,
+      child: Container(
+        width: widthScreen,
+        child: Align(
+          child: PinterestMenu(),
+        ),
+      )
+      );
+  }
+}
+class PinterestGrid extends StatefulWidget{
+
+  @override
+  _PinterestGridState createState() => _PinterestGridState();
+}
+
+class _PinterestGridState extends State<PinterestGrid> {
   final List<int> items =List.generate(20, (index) => index); 
+
+  ScrollController controller=new ScrollController();
+  double scrollBehind=0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.addListener((){
+      // print('Screoll ${controller.offset}');
+      if(controller.offset>scrollBehind){
+        print('occultar');
+      }else{
+        print('mostrar menu');
+      }
+      scrollBehind=controller.offset;
+    });
+  }
+  @override
+  void dispose() { 
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context){
     return new StaggeredGridView.countBuilder(
+      controller: controller,
       crossAxisCount:4,
       itemCount: items.length,
       itemBuilder: (BuildContext context, int index)=>_PinterestItem(index),
