@@ -30,7 +30,6 @@ class PinterestMenu extends StatelessWidget {
     return Center(
         child: Container(
           child:_MenuItems(items),
-
           width: 250,
           height: 60,
           decoration: BoxDecoration(
@@ -68,8 +67,28 @@ class _PinterestMenuButton extends StatelessWidget {
   _PinterestMenuButton(this.index,this.item);
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Icon(item.icon),
+    return GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: item.onPressed,
+          child: Container(
+          child: Icon(
+            item.icon,
+            size: 25,
+            color: Colors.blueGrey,
+            ),
+          
+      ),
     );
+  }
+}
+
+class _MenuModel with ChangeNotifier{
+  int _itemSelected=0;
+
+  int get itemSelected=>this._itemSelected;
+
+  set itemSelected(int index){
+    this._itemSelected=index;
+    notifyListeners();
   }
 }
