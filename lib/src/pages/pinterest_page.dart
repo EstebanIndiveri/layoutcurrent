@@ -69,6 +69,7 @@ class _PinterestGridState extends State<PinterestGrid> {
   void dispose() { 
     controller.dispose();
     super.dispose();
+    // Limpia el controller
   }
 
   @override
