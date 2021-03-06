@@ -106,3 +106,14 @@ class _PinterestItem extends StatelessWidget {
       ));
   }
 }
+
+class _Test extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new Container(
+      child: Text('Hola',style: TextStyle(color: Colors.cyanAccent)),
+    );
+  }
+
+}
