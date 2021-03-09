@@ -71,7 +71,7 @@ class _PinterestGridState extends State<PinterestGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return new StaggeredGridView.countBuilder(
+    return StaggeredGridView.countBuilder(
       controller: controller,
       crossAxisCount: 4,
       itemCount: items.length,
@@ -100,17 +100,5 @@ class _PinterestItem extends StatelessWidget {
             child: new Text('$index'),
           ),
         ));
-  }
-}
-
-class _Test extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return new Container(
-      child: Text('Hola',
-          style:
-              TextStyle(color: Colors.cyanAccent, fontStyle: FontStyle.italic)),
-    );
   }
 }
