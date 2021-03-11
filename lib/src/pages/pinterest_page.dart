@@ -8,14 +8,17 @@ class Pinterest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // body: PinterestGrid(),
-      // body: PinterestGrid(),
-      body: Stack(
-        children: <Widget>[
-          PinterestGrid(),
-          _PinterestMenuLocation(),
-        ],
+    return ChangeNotifierProvider(
+      create: (_) => new _MenuModel(),
+      child: Scaffold(
+        // body: PinterestGrid(),
+        // body: PinterestGrid(),
+        body: Stack(
+          children: <Widget>[
+            PinterestGrid(),
+            _PinterestMenuLocation(),
+          ],
+        ),
       ),
     );
   }
@@ -25,13 +28,15 @@ class _PinterestMenuLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widthScreen = MediaQuery.of(context).size.width;
-
+    final view = Provider.of<_MenuModel>(context).view;
     return Positioned(
         bottom: 30,
         child: Container(
           width: widthScreen,
           child: Align(
-            child: PinterestMenu(),
+            child: PinterestMenu(
+              view: view,
+            ),
           ),
         ));
   }
@@ -55,8 +60,10 @@ class _PinterestGridState extends State<PinterestGrid> {
       // print('Screoll ${controller.offset}');
       if (controller.offset > scrollBehind) {
         print('occultar');
+        Provider.of<_MenuModel>(context, listen: false).view = false;
       } else {
-        print('mostrar menu');
+        Provider.of<_MenuModel>(context, listen: false).view = true;
+        // print('mostrar menu');
       }
       scrollBehind = controller.offset;
     });
@@ -100,5 +107,15 @@ class _PinterestItem extends StatelessWidget {
             child: new Text('$index'),
           ),
         ));
+  }
+}
+
+class _MenuModel with ChangeNotifier {
+  bool _view = true;
+
+  bool get view => this._view;
+  set view(bool valor) {
+    this._view = valor;
+    notifyListeners();
   }
 }
